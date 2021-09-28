@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -36,8 +37,7 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        // return $request->image->extension();
-        // dd($request->all());
+
         $request->validate([
             'name' => 'required',
             'slug' => 'required'
@@ -47,17 +47,14 @@ class CategoryController extends Controller
         $slug = $request->slug;
         $image = $request->image;
 
-        //Query Builder
-        /*DB::table('services')->insert([
-            'title' => $title,
-            'decription' => $description
-        ]);*/
 
+        $user = User::first();
+        $userId = $user ? $user->id : 1;
         //Eloquent
         $category = new Category();
         $category->name = $name;
         $category->slug = $slug;
-        $category->userID = 1;
+        $category->userID = $userId;
 
 
         if ($request->has('image')) {
@@ -97,7 +94,8 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        //
+        $category=$category->firstOrFail();
+        return view('admin.category.categoryEdit', ['category' => $category]);
     }
 
     /**

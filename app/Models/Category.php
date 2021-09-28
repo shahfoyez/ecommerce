@@ -11,9 +11,9 @@ class Category extends Model
 {
     use HasFactory;
     public function user(){
-        return $this->belongsTo(User::class,'id');
+        return $this->belongsTo(User::class,'userID','id');
     }
     public function subCategory(){
-        return $this->hasMany(SubCategory::class,'id');
+        return $this->hasMany(SubCategory::class,'categoryID');
     }
 }

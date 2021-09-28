@@ -29,6 +29,10 @@ Route::group(['prefix'=>'admin/category/'], function(){
     Route::get('category', [CategoryController::class, 'index']);
     Route::get('create',  [CategoryController::class, 'create']);
     Route::post('insert', [CategoryController::class, 'store']);
+    Route::get('edit/{id}', [CategoryController::class, 'edit']);
+    Route::post('update/{id}', [CategoryController::class, 'update']);
+
+
 });
 
 // Sub Category

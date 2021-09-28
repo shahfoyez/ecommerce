@@ -3,11 +3,11 @@
 @section('content')
 <div class="row">
     <div class="col-12">
-        @if(session()->has('message'))
+        {{-- @if(session()->has('message'))
             <div class="alert alert-success">
                 {{ session()->get('message') }}
             </div>
-        @endif
+        @endif --}}
       <div class="card">
         <div class="card-header">
           <h3 class="card-title"><a href="/admin/subCategory/create" class="btn btn-primary btn-sm">Add Sub Category</a></h3>
@@ -26,7 +26,7 @@
         </div>
         <!-- /.card-header -->
         <div class="card-body table-responsive p-0">
-          <table class="table table-head-fixed text-nowrap">
+          <table class="table table-head-fixed text-nowrap" id="myTable">
             <thead>
               <tr>
                 <th>S/N</th>
