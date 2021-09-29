@@ -1,9 +1,8 @@
 @extends('layouts.admin_master')
-@section('title','All Categories')
+@section('title','All Products')
 @section('content')
 <div class="row">
     <div class="col-12">
-        {{-- {{ dd(session()->all()) }} --}}
         {{-- Session flash message --}}
         @if (session()->has('message'))
             <div x-data="{ show:true }"
@@ -15,7 +14,7 @@
         @endif
       <div class="card">
         <div class="card-header  ">
-          <h3 class="card-title"><a href="/admin/category/create" class="btn btn-primary btn-sm">Add Category</a></h3>
+          <h3 class="card-title"><a href="/admin/product/create" class="btn btn-primary btn-sm">Add Product</a></h3>
         </div>
         <!-- /.card-header -->
         <div class="card-body table-responsive">
@@ -23,12 +22,14 @@
             <thead>
               <tr>
                 <th>S/N</th>
-                <th>Category</th>
-                <th>Slug</th>
+                <th weith='10%'>Product</th>
+                <th>Type</th>
+                <th>Price</th>
                 <th>Image</th>
+                <th>Category</th>
+                <th>Subcategory</th>
                 <th>User</th>
                 <th>Published</th>
-                <th>No Of SC</th>
                 <th class="text-right">Action</th>
               </tr>
             </thead>
@@ -36,24 +37,25 @@
                 @php
                     $i = 1;
                 @endphp
-              @foreach ($categories as $category)
+              @foreach ($products as $product)
               <tr>
                 <td>{{ $i++ }}</td>
-                <td> {{ $category->name }}</td>
-                <td> {{ $category->slug }}</td>
+                <td> {{ $product->name }}</td>
+                <td> {{ $product->type }}</td>
+                <td> ${{ $product->price }}</td>
                 @php
-                    $path = $category->image == 'default.jpg' ? asset('default/default.jpg') : asset('uploads/categories/'.$category->image);
+                $path = $product->image == 'default.jpg' ? asset('default/default.jpg') : asset('uploads/products/'.$product->image);
                 @endphp
                 <td>
                     <img src="{{ $path }}" alt="" srcset="" width="50" height="30">
                 </td>
-                <td> {{ $category->user->name }}</td>
-                <td> {{ $category->created_at->diffForHumans() }}</td>
-                <td> {{ $category->subCategory->count() }}</td>
-
+                 <td> {{ $product->category->name }}</td>
+                <td> {{ $product->subCategory->name }}</td>
+                <td> {{ $product->user->name }}</td>
+                <td> {{ $product->created_at->diffForHumans() }}</td>
                 <td class="text-right">
-                    <a href="/admin/category/edit/{{ $category->id }}" class="btn btn-info btn-sm"><i class="fa fa-edit"></i></a>
-                    <a href="/admin/category/delete/{{ $category->id }}" onclick="return confirm('Are you sure to delete?')" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
+                    <a href="/admin/product/edit/{{ $product->id }}" class="btn btn-info btn-sm"><i class="fa fa-edit"></i></a>
+                    <a href="/admin/product/delete/{{ $product->id }}" onclick="return confirm('Are you sure to delete?')" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
                 </td>
               </tr>
               @endforeach

@@ -1,31 +1,23 @@
 @extends('layouts.admin_master')
-@section('title','All Sevices')
+@section('title','All Sub Categories')
 @section('content')
 <div class="row">
     <div class="col-12">
-        {{-- @if(session()->has('message'))
-            <div class="alert alert-success">
-                {{ session()->get('message') }}
+        {{-- Session flash message --}}
+        @if (session()->has('message'))
+            <div x-data="{ show:true }"
+                x-init="setTimeout(() => show = false, 4000)"
+                x-show="show"
+                class="alert alert-success pb-0">
+                <p>{{ session('message') }}</p>
             </div>
-        @endif --}}
+        @endif
       <div class="card">
         <div class="card-header">
           <h3 class="card-title"><a href="/admin/subCategory/create" class="btn btn-primary btn-sm">Add Sub Category</a></h3>
-
-          <div class="card-tools">
-            <div class="input-group input-group-sm" style="width: 150px;">
-              <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
-
-              <div class="input-group-append">
-                <button type="submit" class="btn btn-default">
-                  <i class="fas fa-search"></i>
-                </button>
-              </div>
-            </div>
-          </div>
         </div>
         <!-- /.card-header -->
-        <div class="card-body table-responsive p-0">
+        <div class="card-body table-responsive">
           <table class="table table-head-fixed text-nowrap" id="myTable">
             <thead>
               <tr>
@@ -56,12 +48,12 @@
                 </td>
                 {{-- {{ dd($subCategory->users()) }} --}}
                 {{-- <td> {{ $subCategory->category->name }}</td> --}}
-                <td> {{ "Electronics" }}</td>
+                <td> {{  $subCategory->category->name }}</td>
 
                 <td> {{ $subCategory->created_at->diffForHumans()  }}</td>
                 <td class="text-right">
-                    <a href="" class="btn btn-info btn-sm"><i class="fa fa-edit"></i></a>
-                    <a onclick="return confirm('Are you sure to delete?')" href="" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
+                    <a href="/admin/subCategory/edit/{{ $subCategory->id }}" class="btn btn-info btn-sm"><i class="fa fa-edit"></i></a>
+                    <a  href="/admin/subCategory/delete/{{ $subCategory->id }}" onclick="return confirm('Are you sure to delete?')"   class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
                 </td>
               </tr>
                @endforeach

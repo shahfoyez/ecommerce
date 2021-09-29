@@ -9,15 +9,15 @@
         <div class="card-header">
           <h3 class="card-title">Add Category</h3>
         </div>
-        {{-- @if ($errors->any())
-            <div class="alert alert-danger">
+        @if ($errors->any())
+            <div class="alert alert-danger mt-2 ml-2 pb-0">
                 <ul>
                     @foreach ($errors->all() as $error)
                         <li>{{ $error }}</li>
                     @endforeach
                 </ul>
             </div>
-        @endif --}}
+        @endif
         {{-- @if(session()->has('message'))
             <div class="alert alert-success">
                 {{ session()->get('message') }}

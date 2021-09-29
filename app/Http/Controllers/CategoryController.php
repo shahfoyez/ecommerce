@@ -15,7 +15,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories=Category::all();
+        $categories=Category::with(['user','subCategory'])->get();
         return view('admin.category.category', ['categories'=> $categories]);
     }
 
@@ -40,13 +40,13 @@ class CategoryController extends Controller
 
         $request->validate([
             'name' => 'required',
-            'slug' => 'required'
+            'slug' => 'required',
+            'image'=> 'mimes:jpg,png,jpeg|max:5048'
         ]);
 
         $name = $request->name;
         $slug = $request->slug;
         $image = $request->image;
-
 
         $user = User::first();
         $userId = $user ? $user->id : 1;
@@ -55,7 +55,6 @@ class CategoryController extends Controller
         $category->name = $name;
         $category->slug = $slug;
         $category->userID = $userId;
-
 
         if ($request->has('image')) {
             $extension = $image->extension();
@@ -72,7 +71,7 @@ class CategoryController extends Controller
         }
         $category->save();
 
-        return redirect()->to('admin/category/category')->with('message','Action Successfull!');
+        return redirect()->to('admin/category/category')->with('message','Category Added Successfull!');
     }
 
     /**
@@ -92,9 +91,10 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function edit(Category $category)
+    public function edit(Category $category)   //what id Category $category
     {
-        $category=$category->firstOrFail();
+        // $category=$category->find(request()->id); //when using binding(Category $category) without route matching
+        //$category= Category::findORFail($id); //when using parameter variable
         return view('admin.category.categoryEdit', ['category' => $category]);
     }
 
@@ -105,9 +105,29 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category)
+    public function update(Request $request)
     {
-        //
+        $attributes= $request->validate([
+            'name'=> 'required',
+            'slug'=> 'required',
+            'image'=> 'mimes:jpg,png,jpeg|max:5048'
+        ]);
+
+        $category = Category::findOrFail($request->id);
+        $category->name = $request->name;
+        $category->slug = $request->slug;
+
+        if ($request->has('image')) {
+            $path= public_path('uploads/categories/'.$category->image);
+            if(file_exists($path)){
+                unlink($path);
+            }
+            $imageName='IMG_'.md5(date('d-m-Y H:i:s')).'.'.$request->image->extension();
+            $category->image= $imageName;
+            $request->image->move(public_path('uploads/categories'),$imageName);
+        }
+        $category->save();
+        return redirect('admin/category/category')->with('message', 'Category Updated Successfully.'); // for session flash
     }
 
     /**
@@ -118,6 +138,11 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        $path= public_path('uploads/categories/'.$category->image);
+        if(file_exists($path)){
+            unlink($path);
+        }
+        $category->delete();
+        return redirect('admin/category/category')->with('message', 'Category deleted successfully.');
     }
 }

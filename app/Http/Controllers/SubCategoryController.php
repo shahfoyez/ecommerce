@@ -15,7 +15,7 @@ class SubCategoryController extends Controller
      */
     public function index()
     {
-        $subCategories=SubCategory::get();
+        $subCategories=SubCategory::with('category')->get();
         return view('admin/subCategory/subCategory', compact('subCategories'));
     }
 
@@ -44,34 +44,23 @@ class SubCategoryController extends Controller
             'subCategory'=>'required'
         ]);
 
-        $name = $request->name;
-        $slug = $request->slug;
-        $image = $request->image;
-        $catId=$request->subCategory;
-
         //Eloquent
         $subCategory = new SubCategory();
-        $subCategory->name = $name;
-        $subCategory->slug = $slug;
-        $subCategory->categoryID = $catId;
+        $subCategory->name = $request->name;
+        $subCategory->slug = $request->slug;
+        $subCategory->categoryID = $request->subCategory;
 
 
         if ($request->has('image')) {
-            $extension = $image->extension();
-            $imageName = 'IMG_'.md5(date('d-m-Y H:i:s'));
-            $imageName = $imageName.'.'.$extension;
-
-            $subCategory->image = $imageName;
-
-            $path = public_path('uploads/subCategories');
-
-            $image->move($path,$imageName);
+            $imageName='IMG_'.md5(date('d-m-Y H:i:s')).'.'.$request->image->extension();
+            $subCategory->image= $imageName;
+            $request->image->move(public_path('uploads/subCategories'),$imageName);
         }else{
             $subCategory->image='default.jpg';
         }
         $subCategory->save();
 
-        return redirect()->to('admin/subCategory/subCategory')->with('message','Action Successfull!');
+        return redirect()->to('admin/subCategory/subCategory')->with('message', 'Sub Category Added successfully');
     }
 
     /**
@@ -93,7 +82,8 @@ class SubCategoryController extends Controller
      */
     public function edit(SubCategory $subCategory)
     {
-        //
+        $subCategory=$subCategory->load('category');  //Preload Category Object //Use Load When No Eager Load
+        return view('admin.subCategory.subCategoryEdit', ['subCategory'=>$subCategory]);
     }
 
     /**
@@ -103,9 +93,30 @@ class SubCategoryController extends Controller
      * @param  \App\Models\SubCategory  $subCategory
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, SubCategory $subCategory)
+    public function update(Request $request)
     {
-        //
+        $attributes= $request->validate([
+            'name'=> 'required',
+            'slug'=> 'required',
+            'image'=> 'mimes:jpg,png,jpeg|max:5048',
+            'category' =>'required'
+        ]);
+
+        $subCategory = SubCategory::findOrFail($request->id);
+        $subCategory->name = $request->name;
+        $subCategory->slug = $request->slug;
+        $subCategory->categoryID = $request->category;
+        if ($request->has('image')) {
+            $path= public_path('uploads/subCategories/'.$subCategory->image);
+            if(file_exists($path)){
+                unlink($path);
+            }
+            $imageName='IMG_'.md5(date('d-m-Y H:i:s')).'.'.$request->image->extension();
+            $subCategory->image= $imageName;
+            $request->image->move(public_path('uploads/subCategories'),$imageName);
+        }
+        $subCategory->save();
+        return redirect('admin/subCategory/subCategory')->with('message', 'Category Updated Successfully.'); // for session flash
     }
 
     /**
@@ -116,6 +127,11 @@ class SubCategoryController extends Controller
      */
     public function destroy(SubCategory $subCategory)
     {
-        //
+        $path= public_path('uploads/subCategories/'.$subCategory->image);
+        if(file_exists($path)){
+            unlink($path);
+        }
+        $subCategory->delete();
+        return redirect('admin/subCategory/subCategory')->with('message', 'Sub Category deleted successfully.');
     }
 }

@@ -68,6 +68,7 @@
 <!-- AdminLTE for demo purposes -->
 <script src="{{asset('admin_asset')}}/dist/js/demo.js"></script>
 <script src="//cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
 <script>
     $(document).ready( function () {
         $('#myTable').DataTable({

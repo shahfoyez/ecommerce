@@ -1,5 +1,5 @@
 @extends('layouts.admin_master')
-@section('title','Add Sub Category')
+@section('title','Edit Sub Category')
 @section('content')
 <div class="row justify-content-center">
     <!-- left column -->
@@ -7,7 +7,7 @@
       <!-- general form elements -->
       <div class="card card-primary">
         <div class="card-header">
-          <h3 class="card-title">Add Sub Category</h3>
+          <h3 class="card-title">Edit Sub Category</h3>
         </div>
         @if ($errors->any())
             <div class="alert alert-danger">
@@ -29,42 +29,50 @@
         @endif
         <!-- /.card-header -->
         <!-- form start -->
-        <form method="post" action="/admin/subCategory/insert" enctype="multipart/form-data">
+        <form method="post" action="/admin/subCategory/update?id={{ $subCategory->id }}" enctype="multipart/form-data">
             @csrf
           <div class="card-body">
             <div class="form-group">
               <label>Sub Category Name</label>
-              <input name="name" type="text" class="form-control" placeholder="Sub Category">
+              <input name="name" type="text" class="form-control" placeholder="Sub Category" value="{{ $subCategory->name }}">
             </div>
             <div class="form-group">
               <label>Slug</label>
-              <textarea name="slug" class="form-control" cols="5" rows="5" placeholder="write here"></textarea>
+              <textarea name="slug" class="form-control" cols="5" rows="5" placeholder="write here">{{ $subCategory->slug }}</textarea>
             </div>
             <div class="form-group">
                 <label>Image</label>
                 <input type="file" name="image" class="form-control" onchange="document.getElementById('previewImage').src = window.URL.createObjectURL(this.files[0])">
             </div>
+            @php
+                $path = $subCategory->image == 'default.jpg' ? asset('default/default.jpg') : asset('uploads/subCategories/'.$subCategory->image);
+            @endphp
             <div class="form-group">
-                <img id="previewImage" width="160" height="120">
+                <img src="{{ $path }}" id="previewImage" width="160" height="120">
             </div>
-
             {{-- Dropdown --}}
             <div class="col-lg-13">
                 <label>Category</label>
-                <select name="subCategory" class="form-control">
-                    <option value="">Select Service</option>
-                    @foreach ($categories as $category)
-                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                <select name="category" class="form-control">
+                    <option value="1">Select</option>
+                    @foreach ($subCategory->category->all() as $category)
+                        <option value="{{ $category->id }}"
+                            @if ($category->id == $subCategory->categoryID)
+                                  {{ "selected" }}
+                            @endif
+                        >
+                            {{ $category->name }}
+                        </option>
                     @endforeach
                 </select>
-              </div>
+            </div>
           </div>
           <!-- /.card-body -->
 
           <div class="card-footer">
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-primary">Update</button>
           </div>
-        </form>
+        </>
       </div>
       <!-- /.card -->
 
