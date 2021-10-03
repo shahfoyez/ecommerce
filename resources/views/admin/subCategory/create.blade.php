@@ -52,7 +52,7 @@
             <div class="col-lg-13">
                 <label>Category</label>
                 <select name="subCategory" class="form-control">
-                    <option value="">Select Service</option>
+                    <option value="">Select Category</option>
                     @foreach ($categories as $category)
                         <option value="{{ $category->id }}">{{ $category->name }}</option>
                     @endforeach
