@@ -36,7 +36,7 @@
             <div class="card-body">
                 <div class="form-group">
                     <label>Product Name</label>
-                    <input name="name" type="text" class="form-control" placeholder="Enter Product Name" value={{ $product->name }}>
+                    <input name="name" type="text" class="form-control" placeholder="Enter Product Name" value="{{ $product->name }}">
                 </div>
                 <div class="form-group">
                     <label>Product Type</label>
@@ -44,7 +44,7 @@
                 </div>
                 <div class="form-group">
                     <label>Price</label>
-                    <input name="price" type="text" class="form-control" placeholder="Enter Price" value={{ $product->price }}>
+                    <input name="price" type="text" class="form-control" placeholder="Enter Price" value="{{ $product->price }}">
                 </div>
 
                 <div class="form-group">

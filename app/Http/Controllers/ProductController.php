@@ -145,8 +145,6 @@ class ProductController extends Controller
             $imageName='IMG_'.md5(date('d-m-Y H:i:s')).'.'.$request->image->extension();
             $product->image= $imageName;
             $request->image->move(public_path('uploads/products'),$imageName);
-        }else{
-            $product->image='default.jpg';
         }
         $product->save();
 
