@@ -79,7 +79,7 @@
 
             <div class="col-lg-13">
                 <label>Category</label>
-                <select name="category" class="form-control">
+                <select id="category" name="category" class="form-control">
                     <option value="">Select</option>
                     @foreach ($categories as $category)
                         <option value="{{ $category->id }}">{{ $category->name }}</option>
@@ -88,11 +88,11 @@
             </div>
             <div class="col-lg-13">
                 <label>Sub Category</label>
-                <select name="subCategory" class="form-control">
-                    <option value="">Select</option>
-                    @foreach ($subCategories as $subCategory)
+                <select id="sub_category" name="subCategory" class="form-control">
+                    {{-- @foreach ($subCategories as $subCategory)
                         <option value="{{ $subCategory->id }}">{{ $subCategory->name }}</option>
-                    @endforeach
+                    @endforeach --}}
+
                 </select>
             </div>
           </div>
@@ -109,3 +109,27 @@
     <!--/.col (right) -->
   </div>
 @endsection
+@push('js')
+  <script>
+    $(function(){
+        $('#category').change(function(){
+            var options;
+            var category = $(this).val()
+            var url= "{{ url('/subcategories') }}"
+            $.ajax({
+            url: url,
+            data: {
+                categoryID: category
+            }
+            }).done(function(response) {
+                if(response){
+                    $.each(response, function( i, val ) {
+                        options += '<option value="'+val.id+'">'+val.name+'</option>';
+                        $('#sub_category').html(options)
+                    })
+                }
+            });
+        });
+    });
+  </script>
+@endpush

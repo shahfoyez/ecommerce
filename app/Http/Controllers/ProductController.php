@@ -167,4 +167,9 @@ class ProductController extends Controller
         $product->delete();
         return redirect('admin/product/product')->with('message', 'Product deleted successfully.');
     }
+    public function subCategories(Request $request)
+    {
+        $subCategories=SubCategory::where('categoryID',$request->categoryID)->get();
+        return $subCategories;
+    }
 }

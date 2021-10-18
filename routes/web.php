@@ -57,6 +57,7 @@ Route::group(['prefix'=>'admin/product'], function(){
     Route::get('/delete/{product}', [ProductController::class, 'destroy']);
 
 });
+Route::get('/subcategories', [ProductController::class, 'subCategories']);
 
 //Admin }
 
