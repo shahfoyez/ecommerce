@@ -15,7 +15,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories=Category::with(['user','subCategory'])->get();
+        $categories=Category::with(['user','subCategory'])->orderBy('id', 'desc')->get();
         return view('admin.category.category', ['categories'=> $categories]);
     }
 

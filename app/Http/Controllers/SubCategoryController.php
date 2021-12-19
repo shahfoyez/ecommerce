@@ -56,7 +56,7 @@ class SubCategoryController extends Controller
             $subCategory->image= $imageName;
             $request->image->move(public_path('uploads/subCategories'),$imageName);
         }else{
-            $subCategory->image='default.jpg';
+            $subCategory->image='uploads/default.jpg';
         }
         $subCategory->save();
 

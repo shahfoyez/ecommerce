@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Category extends Model
 {
     use HasFactory;
+    // protected $with=['user'];
     public function user(){
         return $this->belongsTo(User::class,'userID' );
     }
@@ -20,4 +21,5 @@ class Category extends Model
     public function product(){
         return $this->hasMany(Product::class,'categoryID');
     }
+
 }

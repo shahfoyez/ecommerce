@@ -1,4 +1,4 @@
-@extends('layouts.admin_master')
+@extends('layouts.admin.admin_master')
 @section('title','All Categories')
 @section('content')
 <div class="row">
@@ -16,6 +16,7 @@
       <div class="card">
         <div class="card-header  ">
           <h3 class="card-title"><a href="/admin/category/create" class="btn btn-primary btn-sm">Add Category</a></h3>
+          <h3 class="card-tools"><a href="#" onclick="window.print()" class="btn btn-primary btn-sm">Print</a></h3>
         </div>
         <!-- /.card-header -->
         <div class="card-body table-responsive">
@@ -42,7 +43,7 @@
                 <td> {{ $category->name }}</td>
                 <td> {{ $category->slug }}</td>
                 @php
-                    $path = $category->image == 'default.jpg' ? asset('default/default.jpg') : asset('uploads/categories/'.$category->image);
+                    $path = $category->image == 'default.jpg' ? asset('uploads/default/default.jpg') : asset('uploads/categories/'.$category->image);
                 @endphp
                 <td>
                     <img src="{{ $path }}" alt="" srcset="" width="50" height="30">

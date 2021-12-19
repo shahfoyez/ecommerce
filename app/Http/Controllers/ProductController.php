@@ -73,7 +73,7 @@ class ProductController extends Controller
             $product->image= $imageName;
             $request->image->move(public_path('uploads/products'),$imageName);
         }else{
-            $product->image='default.jpg';
+            $product->image='uploads/default.jpg';
         }
         $product->save();
 
@@ -99,7 +99,6 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-
         return view('admin.product.productEdit', [
             'product'=> $product,
             // 'categories'=> Category::all(),

@@ -1,4 +1,4 @@
-@extends('layouts.admin_master')
+@extends('layouts.admin.admin_master')
 @section('title','All Products')
 @section('content')
 <div class="row">
@@ -44,7 +44,7 @@
                 <td> {{ $product->type }}</td>
                 <td> ${{ $product->price }}</td>
                 @php
-                $path = $product->image == 'default.jpg' ? asset('default/default.jpg') : asset('uploads/products/'.$product->image);
+                $path = $product->image == 'default.jpg' ? asset('uploads/default/default.jpg') : asset('uploads/products/'.$product->image);
                 @endphp
                 <td>
                     <img src="{{ $path }}" alt="" srcset="" width="50" height="30">

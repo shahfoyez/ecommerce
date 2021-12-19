@@ -1,4 +1,4 @@
-@extends('layouts.admin_master')
+@extends('layouts.admin.admin_master')
 @section('title','Add Product')
 @section('content')
 <div class="row justify-content-center">
@@ -88,11 +88,10 @@
             </div>
             <div class="col-lg-13">
                 <label>Sub Category</label>
-                <select id="sub_category" name="subCategory" class="form-control">
-                    {{-- @foreach ($subCategories as $subCategory)
+                <select name="subCategory" class="form-control">
+                    @foreach ($subCategories as $subCategory)
                         <option value="{{ $subCategory->id }}">{{ $subCategory->name }}</option>
-                    @endforeach --}}
-
+                    @endforeach
                 </select>
             </div>
           </div>

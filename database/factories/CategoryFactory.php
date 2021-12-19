@@ -22,7 +22,12 @@ class CategoryFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'name'=>
+            'category_id'=>
+            'title'=>
+            'slug'=>
+            'excerpt'=>
+            'body'=>
         ];
     }
 }

@@ -29,6 +29,7 @@ class CreateProductsTable extends Migration
             $table->foreign('subCategoryID')->references('id')->on('sub_categories')->onDelete('cascade')->onUpdate('No Action');
             $table->unsignedBigInteger('userID')->index()->nullable();
             $table->foreign('userID')->references('id')->on('users')->onDelete('cascade')->onUpdate('No Action');
+            $table->unsignedBigInteger('discount')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\admin\GeneralController;
+use App\Models\Category;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
@@ -18,14 +20,18 @@ use App\Http\Controllers\SubCategoryController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-Route::get('dashboard', function () {
+// General Start
+Route::get('/', [GeneralController::class, 'index']);
+Route::get('/category/{category:slug}', [GeneralController::class, 'productByCategory']);
+Route::get('/subCategory/{subCategory:slug}', [GeneralController::class, 'productBySubCategory']);
+Route::get('/product/{product}', [GeneralController::class, 'productById']);
+// General End
+
+// Admin Start
+Route::get('admin/dashboard', function () {
     return view('admin/dashboard');
 });
 
-// Admin{
 // Category
 Route::group(['prefix'=>'admin/category'], function(){
     Route::get('/category', [CategoryController::class, 'index']);
@@ -36,7 +42,6 @@ Route::group(['prefix'=>'admin/category'], function(){
     Route::get('/delete/{category}', [CategoryController::class, 'destroy']);
 
 });
-
 // Sub Category
 Route::group(['prefix'=>'admin/subCategory'], function(){
     Route::get('/subCategory', [SubCategoryController::class, 'index']);
@@ -46,7 +51,6 @@ Route::group(['prefix'=>'admin/subCategory'], function(){
     Route::post('/update', [SubCategoryController::class,'update']);
     Route::get('/delete/{subCategory}', [SubCategoryController::class, 'destroy']);
 });
-
 // Product
 Route::group(['prefix'=>'admin/product'], function(){
     Route::get('/product', [ProductController::class, 'index']);
@@ -59,5 +63,5 @@ Route::group(['prefix'=>'admin/product'], function(){
 });
 Route::get('/subcategories', [ProductController::class, 'subCategories']);
 
-//Admin }
+//Admin End
 

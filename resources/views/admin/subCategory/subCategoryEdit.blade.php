@@ -1,4 +1,4 @@
-@extends('layouts.admin_master')
+@extends('layouts.admin.admin_master')
 @section('title','Edit Sub Category')
 @section('content')
 <div class="row justify-content-center">
@@ -45,7 +45,7 @@
                 <input type="file" name="image" class="form-control" onchange="document.getElementById('previewImage').src = window.URL.createObjectURL(this.files[0])">
             </div>
             @php
-                $path = $subCategory->image == 'default.jpg' ? asset('default/default.jpg') : asset('uploads/subCategories/'.$subCategory->image);
+                $path = $subCategory->image == 'default.jpg' ? asset('uploads/default/default.jpg') : asset('uploads/subCategories/'.$subCategory->image);
             @endphp
             <div class="form-group">
                 <img src="{{ $path }}" id="previewImage" width="160" height="120">

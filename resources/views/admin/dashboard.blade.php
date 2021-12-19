@@ -1,4 +1,4 @@
-@extends('layouts.admin_master')
+@extends('layouts.admin.admin_master')
 @section('title','Dashboard')
 @section('content')
     <!-- Default box -->
