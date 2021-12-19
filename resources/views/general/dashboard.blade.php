@@ -80,7 +80,7 @@
     <div class="mb-4"></div><!-- End .mb-2 -->
 
      {{-- Popular Category --}}
-     @include('layouts.general.containers.popularCategories');
+     @include('general.containers.popularCategories');
      {{-- Popular Category --}}
 
     <div class="mb-2"></div><!-- End .mb-2 -->
@@ -134,7 +134,7 @@
     <div class="mb-3"></div><!-- End .mb-3 -->
 
      {{-- Popular Category --}}
-     @include('layouts.general.containers.hotDeals');
+     @include('general.containers.hotDeals');
      {{-- Popular Category --}}
 
     <div class="mb-3"></div><!-- End .mb-3 -->
